@@ -1,71 +1,88 @@
-# 🚀 VextaDB
+# ⚡ VextaDB — Autonomous Self-Optimizing Hybrid Vector & Relational Database
 
-![Language](https://img.shields.io/badge/Language-Python-blue?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-![Status](https://img.shields.io/badge/Production-Active-success?style=for-the-badge)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![FAISS](https://img.shields.io/badge/Vector-FAISS-00599C?style=for-the-badge)](https://github.com/facebookresearch/faiss)
+[![SQLite](https://img.shields.io/badge/Relational-SQLite3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org/)
+[![Reinforcement Learning](https://img.shields.io/badge/Engine-Self--Optimizing%20RL-00C853?style=for-the-badge)](self_optimization.py)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-## 📌 Overview
+**VextaDB** is an autonomous hybrid database engine that natively unifies **high-dimensional vector similarity search** with **structured relational data storage**. Equipped with an integrated **Reinforcement Learning optimization agent** (`self_optimization.py`), VextaDB dynamically self-tunes its indexing topology (FAISS index types, cluster centroids, quantization parameters) based on continuous runtime query patterns.
 
-A high-performance application engineered by Tarunjit Biswas for quality and scalability.
+---
 
-## ✨ Key Features & Architecture
+## 🧠 Architectural Overview
 
-- **High-Performance Codebase:** Built using `Python` and modern engineering principles.
-- **Modular & Scalable Design:** Structured directory tree for seamless development and deployment.
+```
+                          [ Incoming Query Stream ]
+                          (SQL Relational + Vector)
+                                      |
+                                      v
++---------------------------------------------------------------------------+
+|                          VextaDB Hybrid Engine                            |
++---------------------------------------------------------------------------+
+               |                                            |
+               v                                            v
++-----------------------------+              +-----------------------------+
+|    Relational Subsystem     |              |     Vector Subsystem        |
+|  (`relational/`, SQLite3)   |              |  (`vector_search/`, FAISS)  |
+|  Tabular schema, ACID joins |              |  Dense embedding similarity |
++-----------------------------+              +-----------------------------+
+               |                                            |
+               +----------------------+---------------------+
+                                      |
+                                      v
++---------------------------------------------------------------------------+
+|               Reinforcement Learning Optimizer (`self_optimization.py`)   |
+|   Q-Learning Agent monitors query latency, hit rate & memory footprint    |
+|   Dynamically re-indexes (IVF-PQ vs. Flat) to optimize Pareto frontier    |
++---------------------------------------------------------------------------+
+```
 
-## 🛠️ Tech Stack & Dependencies
+---
 
-- **Core Language:** `Python`
-- **Libraries & Tools:** Python
-- **Deployment Infrastructure:** Vercel Edge / Cloud Services
+## ✨ Features
 
-## 📁 Architecture & File Layout
+* 🔀 **Hybrid Query Engine:** Execute joint queries filtering by structured metadata (e.g. `price < 100`, `category = 'electronics'`) while simultaneously computing vector cosine distance.
+* 🤖 **Autonomous Index Tuning:** The RL agent (`ReinforcementLearningAgent`) observes latency rewards and automatically selects optimal indexing strategies.
+* ⚡ **High-Throughput Vector Indexing:** Hardware-accelerated FAISS integration supporting millions of vectors.
+* 📊 **Integrated API & Demos:** Ready-to-run interactive demonstrations in `demos/`.
+
+---
+
+## 📁 Repository Structure
 
 ```text
 VextaDB/
-├── .github
-├── .github/ISSUE_TEMPLATE
-├── .github/ISSUE_TEMPLATE/bug_report.md
-├── .github/ISSUE_TEMPLATE/feature_request.md
-├── .github/PULL_REQUEST_TEMPLATE.md
-├── .github/workflows
-├── .github/workflows/ci.yml
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── README.md
-├── __pycache__
-├── __pycache__/ai_indexing.cpython-311.pyc
-├── __pycache__/self_optimization.cpython-311.pyc
-├── ai_indexing.py
-└── ... [additional codebase files]
+├── ai_indexing.py          # AI-driven embedding & tabular analysis coordinator
+├── self_optimization.py    # Reinforcement Learning agent for automatic index tuning
+├── vector_search/          # FAISS vector similarity search modules
+├── relational/             # SQLite tabular storage engine & SQL parsers
+├── core/                   # Storage manager, cache buffer & transaction log
+├── api/                    # REST / RPC API endpoints
+├── demos/                  # Interactive benchmarks & demonstration scripts
+├── nlp/                    # Text-to-embedding translation pipeline
+├── LICENSE                 # MIT License
+└── README.md
 ```
 
-## 🚀 Quickstart & Installation
+---
 
-### Prerequisites
-- Python 3.9+
-- pip package manager
+## 🚀 Quick Start
 
-### Setup Instructions
+### 1. Installation
+```bash
+git clone https://github.com/Tarunjit45/VextaDB.git
+cd VextaDB
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Tarunjit45/VextaDB.git
-   cd VextaDB
-   ```
+pip install faiss-cpu numpy sqlite3
+```
 
-2. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 2. Run Interactive Demo
+```bash
+python demos/basic_search.py
+```
 
-3. **Execute application:**
-   ```bash
-   python main.py
-   ```
+---
 
-## 📜 Author & License
-
-Architected & Developed by **[Tarunjit Biswas](https://github.com/Tarunjit45)**.  
-Distributed under the **MIT License**.
+## 📄 License
+This project is licensed under the [MIT License](LICENSE).
